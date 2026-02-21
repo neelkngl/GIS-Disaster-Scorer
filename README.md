@@ -1,3 +1,3 @@
 # GIS-Disaster-Scorer
 
-Chud-a-thon
+This project entails a method of classification of various natural disasters.
