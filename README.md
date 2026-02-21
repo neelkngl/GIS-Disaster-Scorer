@@ -1,3 +1,3 @@
 # GIS-Disaster-Scorer
 
-This project entails a method of classification of various natural disasters.
+Our goal is to build a risk-adjusted housing desirability index using various weather and disaster datasets along with current housing hotness data to compile a desirability index by zip code.
