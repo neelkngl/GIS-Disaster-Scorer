@@ -30,6 +30,7 @@ import os
 import re
 from pathlib import Path
 from typing import List, Dict, Optional
+from project_paths import raw_dir as proj_raw_dir, processed_dir as proj_processed_dir
 
 import numpy as np
 import pandas as pd
@@ -322,14 +323,20 @@ def process_dictionary(raw_dir: Path, out_dir: Path) -> Optional[Path]:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--raw-dir", type=str, default=str(Path(__file__).resolve().parent),
-                        help="Directory containing the raw input CSVs.")
-    parser.add_argument("--out-dir", type=str, default=str(Path(__file__).resolve().parent / "data" / "processed"),
-                        help="Directory to write processed outputs.")
+    parser.add_argument("--raw-dir", type=str, default=None,
+                        help="Directory containing the raw input CSVs. If omitted, resolved automatically.")
+    parser.add_argument("--out-dir", type=str, default=None,
+                        help="Directory to write processed outputs. If omitted, resolved automatically.")
     args = parser.parse_args()
+    if args.raw_dir:
+        raw_dir = Path(args.raw_dir).resolve()
+    else:
+        raw_dir = Path(proj_raw_dir()).resolve()
 
-    raw_dir = Path(args.raw_dir).resolve()
-    out_dir = Path(args.out_dir).resolve()
+    if args.out_dir:
+        out_dir = Path(args.out_dir).resolve()
+    else:
+        out_dir = Path(proj_processed_dir()).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"RAW_DIR: {raw_dir}")

@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
+from project_paths import processed_dir as proj_processed_dir
 
 # =====================
 # Helpers
@@ -19,9 +21,10 @@ def safe_div(a, b):
 # Load data
 # =====================
 
-nri = pd.read_csv("datasets/processed/nri_county_total.csv")
-cross = pd.read_csv("datasets/processed/county_zip_conversion_processed.csv")
-metro = pd.read_csv("datasets/processed/metro_snapshot_zhvi_markettemp.csv")
+nri_base = Path(proj_processed_dir())
+nri = pd.read_csv(nri_base / "nri_county_total.csv")
+cross = pd.read_csv(nri_base / "county_zip_conversion_processed.csv")
+metro = pd.read_csv(nri_base / "metro_snapshot_zhvi_markettemp.csv")
 
 # =====================
 # Clean keys
@@ -123,9 +126,8 @@ zip_risk["score_0_100"] = 100 * minmax(zip_risk["score_raw"])
 # Save output
 # =====================
 
-zip_risk.to_csv(
-    "datasets/processed/zip_scores_balanced.csv",
-    index=False
-)
+out_base = Path(proj_processed_dir())
+out_base.mkdir(parents=True, exist_ok=True)
+zip_risk.to_csv(out_base / "zip_scores_balanced.csv", index=False)
 
 print(zip_risk.head())

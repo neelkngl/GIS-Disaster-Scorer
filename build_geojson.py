@@ -2,19 +2,22 @@ import os
 import zipfile
 import requests
 from pathlib import Path
+from project_paths import processed_dir as proj_processed_dir, out_dir as proj_out_dir, raw_dir as proj_raw_dir
 
 import pandas as pd
-import geopandas as gpd
+try:
+    import geopandas as gpd
+except Exception as e:
+    gpd = None
+    _GEOPANDAS_IMPORT_ERROR = e
 
 
 # -------------------------
 # Config
 # -------------------------
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-RAW_DIR = DATA_DIR / "raw"
-PROCESSED_DIR = DATA_DIR / "processed"
-OUT_DIR = DATA_DIR / "out"
+PROCESSED_DIR = Path(proj_processed_dir()).resolve()
+RAW_DIR = Path(proj_raw_dir()).resolve()
+OUT_DIR = Path(proj_out_dir()).resolve()
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -61,6 +64,10 @@ def find_vector_file(folder: Path):
     raise FileNotFoundError("Could not find .shp in extracted folder")
 
 def main():
+    if gpd is None:
+        raise ModuleNotFoundError(
+            "geopandas is required for build_geojson.py. Install with 'conda install -c conda-forge geopandas' or 'pip install geopandas' and required wheels."
+        )
     if not NRI_TOTAL_CSV.exists():
         raise FileNotFoundError(f"Missing {NRI_TOTAL_CSV}. Run preprocess.py first.")
 

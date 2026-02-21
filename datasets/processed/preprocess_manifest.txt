@@ -1,0 +1,5 @@
+metro_snapshot: C:\Users\aweso\GIS-Disaster-Scorer\GIS-Disaster-Scorer-1\datasets\processed\metro_snapshot_zhvi_markettemp.csv
+county_zip: C:\Users\aweso\GIS-Disaster-Scorer\GIS-Disaster-Scorer-1\datasets\processed\county_zip_conversion_processed.csv
+nri_total: C:\Users\aweso\GIS-Disaster-Scorer\GIS-Disaster-Scorer-1\datasets\processed\nri_county_total.csv
+nri_hazard_long: C:\Users\aweso\GIS-Disaster-Scorer\GIS-Disaster-Scorer-1\datasets\processed\nri_county_hazard_long.csv
+nri_dictionary: C:\Users\aweso\GIS-Disaster-Scorer\GIS-Disaster-Scorer-1\datasets\processed\nri_data_dictionary_preview.csv
