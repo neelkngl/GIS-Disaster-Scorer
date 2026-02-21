@@ -24,9 +24,9 @@ Our goal is to build a risk‑adjusted housing desirability index using weather 
 - Transparent scoring logic so users can understand tradeoffs
 
 ## Tech Stack
-Backend: Python
-Data: Public weather and disaster datasets, housing hotness data sources
-Frontend: Lovable, Python (interactive map)
+- Backend: Python
+- Data: Public weather and disaster datasets, housing hotness data sources
+- Frontend: Lovable, Python (interactive map)
 
 ## Example User Flow
 1. User selects which natural disasters they care most about avoiding.
