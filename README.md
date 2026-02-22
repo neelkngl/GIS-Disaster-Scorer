@@ -1,5 +1,6 @@
 # SafeHaven
 https://safe-haven-investing.lovable.app/
+
 SafeHaven is a personalized, risk‑adjusted housing desirability tool that helps people find where to live based on their tolerance for different natural disasters.
 
 ## Overview
