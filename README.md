@@ -1,8 +1,9 @@
 # SafeHaven
+https://safe-haven-investing.lovable.app/
 SafeHaven is a personalized, risk‑adjusted housing desirability tool that helps people find where to live based on their tolerance for different natural disasters.
 
 ## Overview
-Our goal is to build a risk‑adjusted housing desirability index using weather and disaster datasets along with current housing “hotness” data to generate a desirability score by city/metropolitan area. Users can specify how averse they are to different natural disasters (for example: coastal flooding, hurricanes, wildfires, earthquakes, drought, heat waves), and SafeHaven will surface locations that best match their preferences through an interactive map.
+Our goal is to build a risk‑adjusted housing desirability index using weather and disaster datasets along with current housing “hotness” data to generate a desirability score by county. Users can specify how averse they are to different natural disasters (for example: coastal flooding, hurricanes, wildfires, earthquakes, drought, heat waves), and SafeHaven will surface locations that best match their preferences through an interactive map.
 
 ## How It Works
 1. We collect and aggregate:
@@ -25,7 +26,7 @@ Our goal is to build a risk‑adjusted housing desirability index using weather 
 
 ## Tech Stack
 - Backend: Python
-- Data: Public weather and disaster datasets, housing hotness data sources
+- Data: FEMA NRI Data, Zillow
 - Frontend: Lovable, Python, GeoJSON (interactive map)
 
 ## Example User Flow
