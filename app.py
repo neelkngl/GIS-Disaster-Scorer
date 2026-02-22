@@ -273,8 +273,9 @@ def score_preview(req: FilterRequest):
     # risk_raw: higher=worse (so "under threshold" means safer)
     risk_raw = base_penalty + HAZARD_W * hazard_penalty
 
-    # stable-ish 0-100 risk index
-    risk_0_100 = _pct_rank_0_100(risk_raw)
+    # stable-ish 0-100 risk index (higher is safer)
+    risk_percentile = _pct_rank_0_100(risk_raw)
+    safe_0_100 = 100.0 - risk_percentile
 
     gdf = GDF  # type: ignore[assignment]
 
@@ -295,12 +296,12 @@ def score_preview(req: FilterRequest):
                 risk_max=None,
             )
         idx = gdf_view.index.to_numpy()
-        risk_view = risk_0_100[idx]
+        risk_view = safe_0_100[idx]
     else:
         in_view = int(len(gdf))
-        risk_view = risk_0_100
+        risk_view = safe_0_100
 
-    passing = risk_view <= float(req.threshold)
+    passing = risk_view >= float(req.threshold)
     pass_count = int(passing.sum())
 
     if pass_count > 0:
@@ -337,7 +338,8 @@ def map_filter(req: FilterRequest):
 
     base_penalty = (RISK_W * RISK_NORM + COST_W * COST_NORM).astype(float)
     risk_raw = base_penalty + HAZARD_W * hazard_penalty
-    risk_0_100 = _pct_rank_0_100(risk_raw)
+    risk_percentile = _pct_rank_0_100(risk_raw)
+    safe_0_100 = 100.0 - risk_percentile
 
     gdf = GDF.copy()  # type: ignore[union-attr]
 
@@ -349,8 +351,8 @@ def map_filter(req: FilterRequest):
         return JSONResponse(content={"type": "FeatureCollection", "features": []})
 
     idx = gdf.index.to_numpy()
-    risk_subset = risk_0_100[idx]
-    mask = risk_subset <= float(req.threshold)
+    risk_subset = safe_0_100[idx]
+    mask = risk_subset >= float(req.threshold)
 
     gdf = gdf.loc[gdf.index[mask]]
 
@@ -360,7 +362,7 @@ def map_filter(req: FilterRequest):
     if req.include_debug_fields:
         gdf = gdf.copy()
         gdf["risk_raw"] = risk_raw[gdf.index]
-        gdf["risk_0_100"] = risk_0_100[gdf.index]
+        gdf["safe_0_100"] = safe_0_100[gdf.index]
         gdf["base_penalty"] = base_penalty[gdf.index]
         gdf["hazard_penalty"] = hazard_penalty[gdf.index]
         gdf["weight_sum_in"] = s_in
