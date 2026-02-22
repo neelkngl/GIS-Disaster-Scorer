@@ -9,7 +9,7 @@ Our goal is to build a risk‑adjusted housing desirability index using weather 
 ## How It Works
 1. We collect and aggregate:
    - Historical and projected disaster and weather data by region
-   - Housing demand / “hotness” and market activity data by city/metro
+   - Housing demand / “hotness” and market activity data by county
 2. We compute a risk‑adjusted desirability score that combines:
    - Baseline housing desirability (e.g., demand, stability, growth)
    - Hazard‑specific risk metrics (e.g., flood risk, wildfire risk, seismic risk)
