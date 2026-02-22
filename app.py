@@ -208,6 +208,7 @@ def startup_load():
         gdf["STATEFP"] = gdf["GEOID"].astype(str).str[:2]
 
     gdf = gdf[gdf["STATEFP"].isin(valid_state_fips)].copy()
+    gdf = gdf.reset_index(drop=True)
 
     # required columns
     needed = ["GEOID", "risk_norm", "cost_norm"] + [f"{hz}_norm" for hz in HAZARDS]
