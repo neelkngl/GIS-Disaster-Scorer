@@ -34,7 +34,7 @@ except Exception:
 # Scoring weights (match scoring.py defaults)
 RISK_W = float(os.getenv("RISK_W", "0.65"))
 COST_W = float(os.getenv("COST_W", "0.35"))
-HAZARD_W = float(os.getenv("HAZARD_W", "1.0"))
+HAZARD_W = float(os.getenv("HAZARD_W", "1.25"))
 
 # The 8 hazard slider codes your scoring pipeline uses
 HAZARDS = ["CFLD", "ERQK", "HRCN", "TRND", "WFIR", "CWAV", "HWAV", "DRGT"]
