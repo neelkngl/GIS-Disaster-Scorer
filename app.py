@@ -34,7 +34,7 @@ except Exception:
 # Scoring weights (match scoring.py defaults)
 RISK_W = float(os.getenv("RISK_W", "0.65"))
 COST_W = float(os.getenv("COST_W", "0.35"))
-HAZARD_W = float(os.getenv("HAZARD_W", "0.12"))
+HAZARD_W = float(os.getenv("HAZARD_W", "1.0"))
 
 # The 8 hazard slider codes your scoring pipeline uses
 HAZARDS = ["CFLD", "ERQK", "HRCN", "TRND", "WFIR", "CWAV", "HWAV", "DRGT"]
@@ -388,6 +388,9 @@ def map_filter(req: FilterRequest):
         gdf["weight_sum_used"] = s_used
 
     return JSONResponse(content=_to_featurecollection(gdf, max_features=req.max_features))
+
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 if __name__ == "__main__":
     import uvicorn
