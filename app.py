@@ -362,7 +362,11 @@ def map_filter(req: FilterRequest):
     if req.include_debug_fields:
         gdf = gdf.copy()
         gdf["risk_raw"] = risk_raw[gdf.index]
-        gdf["safe_0_100"] = safe_0_100[gdf.index]
+
+    # add both so frontend won't break
+        gdf["risk_0_100"] = risk_percentile[gdf.index]      # higher = worse (old behavior)
+        gdf["safe_0_100"] = safe_0_100[gdf.index]           # higher = safer (new behavior)
+
         gdf["base_penalty"] = base_penalty[gdf.index]
         gdf["hazard_penalty"] = hazard_penalty[gdf.index]
         gdf["weight_sum_in"] = s_in
