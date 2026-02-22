@@ -23,7 +23,11 @@ OUT_DIR = Path(proj_out_dir()).resolve()
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ✅ NEW: join scored county table (produced by scoring.py)
+# GeoJSON output folder where app.py expects it
+GEOJSON_OUT_DIR = PROCESSED_DIR / "geojson"
+GEOJSON_OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# NEW: join scored county table (produced by scoring.py)
 COUNTY_SCORES_CSV = PROCESSED_DIR / "county_scores_balanced.csv"
 
 # Optional: keep the NRI totals join too (set to True if you want both)
@@ -139,13 +143,13 @@ def main():
         print(f"[JOIN] rows={len(joined):,} (score_0_100 not found in joined properties)")
 
     # 7) Write GeoJSONs
-    out_full = OUT_DIR / "county_scores_balanced.geojson"
+    out_full = GEOJSON_OUT_DIR / "county_scores_balanced.geojson"
     joined.to_file(out_full, driver="GeoJSON")
     print(f"[OK] Wrote {out_full}")
 
     joined_simpl = joined.copy()
     joined_simpl["geometry"] = joined_simpl["geometry"].simplify(tolerance=0.01, preserve_topology=True)
-    out_simpl = OUT_DIR / "county_scores_balanced_simplified.geojson"
+    out_simpl = GEOJSON_OUT_DIR / "county_scores_balanced_simplified.geojson"
     joined_simpl.to_file(out_simpl, driver="GeoJSON")
     print(f"[OK] Wrote {out_simpl}")
 

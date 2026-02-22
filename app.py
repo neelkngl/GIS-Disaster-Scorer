@@ -13,14 +13,6 @@ from pydantic import BaseModel, Field, conlist
 
 from fastapi.middleware.cors import CORSMiddleware
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # later restrict to your frontend domain
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 # ============================================================
 # Config / Paths
@@ -108,7 +100,15 @@ class PreviewResponse(BaseModel):
 # ============================================================
 # App + Globals
 # ============================================================
-app = FastAPI(title="ClimateRisk AI - County Map (8 sliders)", version="0.2.0")
+app = FastAPI(title="SafeHaven - County Map", version="0.2.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # later restrict to your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 GDF: Optional[gpd.GeoDataFrame] = None
 SINDEX = None
@@ -367,3 +367,7 @@ def map_filter(req: FilterRequest):
         gdf["weight_sum_used"] = s_used
 
     return JSONResponse(content=_to_featurecollection(gdf, max_features=req.max_features))
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
